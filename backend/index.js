@@ -12,12 +12,14 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? 'https://yardstick-assigment-notes-tw49.vercel.app' 
+  origin: process.env.NODE_ENV === 'production'
+    ? 'https://yardstick-assigment-notes-tw49.vercel.app'
     : 'http://localhost:5173',
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // include OPTIONS
+  allowedHeaders: ['Content-Type', 'Authorization']     // allow headers
 }));
+
 
 
 const { authRouter } = require("./Routes/auth.routes");
