@@ -11,32 +11,30 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-// const allowedOrigins = [
-//   "http://localhost:5173",
-//   "https://yardstick-assigment-notes-tw49.vercel.app", // main prod
-// ];
+const cors = require("cors");
 
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (!origin) return callback(null, true); // allow REST tools & curl
-//     if (
-//       allowedOrigins.includes(origin) ||
-//       /^https:\/\/yardstick-assigment-notes-tw49.*\.vercel\.app$/.test(origin) // allow preview deploys
-//     ) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error("Not allowed by CORS"));
-//     }
-//   },
-//   credentials: true,
-//   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-//   allowedHeaders: ["Content-Type", "Authorization"],
-// };
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://yardstick-assigment-n-git-c6f848-ankit-kumars-projects-1aafe4d1.vercel.app",
+  "https://yardstick-assigment-notes-tw49.vercel.app"
+];
 
 app.use(cors({
-  origin: true,  // reflect request origin
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
+// Handle preflight requests explicitly
+app.options("*", cors());
+
 
 
 
