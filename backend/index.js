@@ -23,7 +23,6 @@ app.use(
   })
 );
 
-app.options("*", cors());
 
 
 const { authRouter } = require("./Routes/auth.routes");
@@ -41,5 +40,9 @@ app.get("/", (req, res) => {
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "ok" });
 });
+
+app.listen(process.env.PORT,()=>{
+    console.log("Server is running")
+})
 
 module.exports = app;
