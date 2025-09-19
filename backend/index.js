@@ -11,14 +11,29 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(cors({
-  origin: process.env.NODE_ENV === 'production'
-    ? 'https://yardstick-assigment-notes-tw49.vercel.app'
-    : 'http://localhost:5173',
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://yardstick-assigment-notes-tw49.vercel.app", // main prod
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true); // allow REST tools & curl
+    if (
+      allowedOrigins.includes(origin) ||
+      /^https:\/\/yardstick-assigment-notes-tw49.*\.vercel\.app$/.test(origin) // allow preview deploys
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // include OPTIONS
-  allowedHeaders: ['Content-Type', 'Authorization']     // allow headers
-}));
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
 
 
 
