@@ -13,8 +13,6 @@ app.use(cookieParser());
 
 
 const allowedOrigins = [
-  "http://localhost:5173",
-  "https://yardstick-assigment-n-git-c6f848-ankit-kumars-projects-1aafe4d1.vercel.app",
   "https://yardstick-assigment-notes-tw49.vercel.app"
 ];
 
