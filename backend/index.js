@@ -11,13 +11,13 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-const cors = require("cors");
 
 const allowedOrigins = [
   "http://localhost:5173",
   "https://yardstick-assigment-n-git-c6f848-ankit-kumars-projects-1aafe4d1.vercel.app",
   "https://yardstick-assigment-notes-tw49.vercel.app"
 ];
+
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -32,10 +32,8 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-// Handle preflight requests explicitly
+
 app.options("*", cors());
-
-
 
 
 const { authRouter } = require("./Routes/auth.routes");
